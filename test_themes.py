@@ -168,3 +168,9 @@ class TestThemes:
         amo_home_page = AddonsHomePage(testsetup)
         Assert.true(amo_home_page.has_category("Themes"))
 
+    def test_that_most_popular_link_is_selected_by_default(self, testsetup):
+        """ test for litmus 15348"""
+        amo_home_page = AddonsHomePage(testsetup)
+        amo_themes_page = amo_home_page.click_themes()
+        Assert.equal(amo_themes_page.current_sort, "Downloads")
+
