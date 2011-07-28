@@ -172,5 +172,4 @@ class TestThemes:
         """ test for litmus 15348"""
         amo_home_page = AddonsHomePage(testsetup)
         amo_themes_page = amo_home_page.click_themes()
-        Assert.equal(amo_themes_page.current_sort, "Downloads")
-
+        Assert.true(amo_themes_page.is_most_popular_category_selected)

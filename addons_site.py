@@ -387,7 +387,6 @@ class AddonsThemesPage(AddonsHomePage):
     _category_locator = "css=#c-30 > a"
     _top_counter_locator = "css=div.primary>header b"
     _bottom_counter_locator = "css=div.num-results > strong:nth(2)"
-    _current_sort_link_locator = "css=#addon-list-options li.selected a"
 
     def __init__(self, testsetup):
         AddonsBasePage.__init__(self, testsetup)
@@ -463,8 +462,21 @@ class AddonsThemesPage(AddonsHomePage):
         return self.selenium.get_text(self._bottom_counter_locator)
 
     @property
-    def current_sort(self):
-	    return self.selenium.get_text(self._current_sort_link_locator)
+    def is_most_popular_category_selected(self):
+        browser_document = "selenium.browserbot.getCurrentWindow().document"
+        popular_category_element = browser_document + ".getElementById('c-popular')"
+        popular_category_link = popular_category_element + ".firstElementChild"
+        arrow_relative_location = "\'media\/img\/zamboni\/arrow-right-blue.png\'"
+        link_color = "'rgb(68, 68, 68)'"
+        jsArrowPresentFunc = browser_document + ".defaultView.getComputedStyle(" + popular_category_element + ", null)" \
+                             ".getPropertyValue('background-image').indexOf(" + arrow_relative_location + ") != -1"
+        isLinkSelectedFunc = browser_document + ".defaultView.getComputedStyle(" + popular_category_link + ", null)" \
+                             ".getPropertyValue('color') == " + link_color
+        isArrowPresent = self.selenium.get_eval(jsArrowPresentFunc)
+        isLinkSelected = self.selenium.get_eval(isLinkSelectedFunc)
+        if isLinkSelected == "true" and isArrowPresent == "true":
+            return True
+        return False
 
 class AddonsThemePage(AddonsBasePage):
 
