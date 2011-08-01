@@ -388,6 +388,7 @@ class AddonsThemesPage(AddonsHomePage):
     _category_locator = "css=#c-30 > a"
     _top_counter_locator = "css=div.primary>header b"
     _bottom_counter_locator = "css=div.num-results > strong:nth(2)"
+    _current_sort_link_locator = "css=#addon-list-options li.selected a"
 
     def __init__(self, testsetup):
         AddonsBasePage.__init__(self, testsetup)
@@ -478,6 +479,10 @@ class AddonsThemesPage(AddonsHomePage):
         if isLinkSelected == "true" and isArrowPresent == "true":
             return True
         return False
+
+    @property
+    def current_sort(self):
+        return self.selenium.get_text(self._current_sort_link_locator)
 
 class AddonsThemePage(AddonsBasePage):
 

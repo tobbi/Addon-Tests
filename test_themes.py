@@ -25,6 +25,7 @@
 #                 Dave Hunt <dhunt@mozilla.com>
 #                 Joel Andersson <janderssn@gmail.com>
 #                 Teodosia Pop <teodosia.pop@softvision.ro>
+#                 Tobias Markus <tobbi.bugs@googlemail.com>
 #
 # Alternatively, the contents of this file may be used under the terms of
 # either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -172,3 +173,4 @@ class TestThemes:
         amo_home_page = AddonsHomePage(testsetup)
         amo_themes_page = amo_home_page.click_themes()
         Assert.true(amo_themes_page.is_most_popular_category_selected)
+        Assert.equal(amo_themes_page.current_sort, "Downloads")
