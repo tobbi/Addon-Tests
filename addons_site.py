@@ -389,6 +389,7 @@ class AddonsThemesPage(AddonsHomePage):
     _top_counter_locator = "css=div.primary>header b"
     _bottom_counter_locator = "css=div.num-results > strong:nth(2)"
     _current_sort_link_locator = "css=#addon-list-options li.selected a"
+    _weekly_download_count_locator = "css=#addon-listing .thumbs:nth-of-type(%s) li:nth-of-type(%s) .details p.meta"
 
     def __init__(self, testsetup):
         AddonsBasePage.__init__(self, testsetup)
@@ -483,6 +484,14 @@ class AddonsThemesPage(AddonsHomePage):
     @property
     def current_sort(self):
         return self.selenium.get_text(self._current_sort_link_locator)
+
+    def get_weekly_download_count(self, index):
+        max_column_count = 4
+        row = (index / max_column_count) + 1
+        column = (index) % max_column_count + 1
+        download_count_text = self.selenium.get_text(self._weekly_download_count_locator % (row, column))
+        download_count = re.sub("\D+", "", download_count_text)
+        return int(download_count)
 
 class AddonsThemePage(AddonsBasePage):
 

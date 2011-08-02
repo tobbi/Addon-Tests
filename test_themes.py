@@ -174,3 +174,6 @@ class TestThemes:
         amo_themes_page = amo_home_page.click_themes()
         Assert.true(amo_themes_page.is_most_popular_category_selected)
         Assert.equal(amo_themes_page.current_sort, "Downloads")
+        for x in range(2, 16):
+            previous_download_count = amo_themes_page.get_weekly_download_count(x - 1)
+            Assert.true(amo_themes_page.get_weekly_download_count(x) < previous_download_count)
